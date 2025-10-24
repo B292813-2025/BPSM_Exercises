@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 dna_seq='ACTGATCGATTACGTATAGTATTTGCTATCATACATATATATCGATGCGTTCAT'
 complement=''
 for i in dna_seq:
