@@ -4,6 +4,7 @@ import os
 import sys
 with open("plain_genomic_seq.txt") as my_file:
  my_file = my_file.read()
+ my_file = my_file.replace("X","").replace("S","").replace("K","").replace("L","")
  exon1 = my_file[:62]
  exon2 = my_file[90:] #the second exon runs from the ninety-first BASE to the end of the sequence
  intron = my_file[62:90]
