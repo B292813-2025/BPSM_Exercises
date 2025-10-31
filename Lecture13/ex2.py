@@ -11,3 +11,4 @@ for i in range(0,len(position),2):
 
 with open('conc_exon_seg.txt','w') as out:
  out.write(exons)
+ out.write('\n')
