@@ -1,0 +1,14 @@
+#!/usr/bin/python
+import csv
+tab_data = open('data.csv').read()
+with open('data.csv') as tab_data:
+ reader = csv.reader(tab_data)
+ with open('Q2A.txt','w') as out:
+   for line in reader:
+    species = line[0].strip()
+    sequence = line[1].strip()
+    gene_name = line[2].strip()
+    expression_level = line[3].strip()
+    if len(sequence)<110 and len(sequence)>90:
+     print(gene_name)
+     out.write(f'{gene_name}\n')

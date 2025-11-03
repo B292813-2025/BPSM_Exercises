@@ -1,0 +1,2 @@
+AT appears 5 times
+GC appears 2 times
