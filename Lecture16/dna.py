@@ -35,11 +35,12 @@ def translate(seq,frame=0):
  return protein
 
 dna = input("Enter DNA sequence: ").strip().upper()
+frames = int(input("Enter the number of frames desired: "))
 print("\n--- Forward Strand ---")
-for frame in range(3):
- print(f"Frame {frame+1}: {translate(dna, frame)}")
+for frame in range(0,frames):
+ print(f"Frame {frame+1}: {translate(dna, frame)}\n")
 
 rev_dna = rev_seq(dna)
 print("\n--- Reverse Strand ---")
-for frame in range(3):
- print(f"Frame {frame+1}: {translate(rev_dna, frame)}")
+for frame in range(0,frames):
+ print(f"Frame {frame+1}: {translate(rev_dna, frame)}\n")
