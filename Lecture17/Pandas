@@ -1,0 +1,45 @@
+source playtime/bin/activate
+import pandas as pd
+df = pd.read_csv('eukaryotes.txt', sep="\t", na_values=['-'])
+#-------------------------------------------------------------------------------------------------------------------------------------------
+# how many fungal species have genomes bigger than 100Mb? What are their names?
+# Group == Fungi
+q1df =df[ df.apply(lambda x:x['Size (Mb)']>100 and x['Group'] in ['Fungi'], axis=1)] 
+# For the names
+q1df['#Organism/Name'].sort_values(ascending=True)
+# To count how many
+q1df.shape[0]
+
+#-------------------------------------------------------------------------------------------------------------------------------------------
+# how many of each Kingdom/group (plants, animals, fungi and protists) have been sequenced?
+q2df= df[ df.apply(lambda x:x['Status'] in ['Complete Genome','Chromosome'], axis=1)]
+q2df['Group'].value_counts()
+
+#-------------------------------------------------------------------------------------------------------------------------------------------
+#which Heliconius species genomes have been sequenced?
+df['genus'] = df.apply(lambda x : x['#Organism/Name'].split(' ')[0], axis=1)
+q3df = df[ df.apply(lambda x:x['Status'] in ['Complete Genome','Chromosome'] and x['genus'] in ['Heliconius'], axis=1)]
+q3df['#Organism/Name']
+#OR
+# hel = df[df['#Organism/Name'].str.startswith('Heliconius', na=False)]
+# hel[['#Organism/Name', 'Scaffolds']].sort_values('Scaffolds', ascending= False)
+
+#-------------------------------------------------------------------------------------------------------------------------------------------
+# which sequencing centre has sequenced the most plant genomes? the most insect genomes?
+# plants
+q4df = df[['Group','Center']]
+q4df_plant = q4df[ q4df.apply(lambda x:x['Group'] in ['Plants'], axis=1)]
+q4df_plant.value_counts('Center')
+q4df_plant.value_counts('Center').head(1)
+# insects
+q4df_insect = df[ df.apply(lambda x:x['SubGroup'] in ['Insects'], axis=1)]
+q4df_insect.value_counts('Center')
+q4df_insect.value_counts('Center').head(1)
+
+#-------------------------------------------------------------------------------------------------------------------------------------------
+# add a column giving the number of proteins per gene. Which genomes have at least 10% more proteins than genes?
+fraction= df['Proteins']/df['Genes']
+df['Proteins Per Gene']=fraction
+q5df = df[ df.apply(lambda x:x['Proteins Per Gene'] >=1.1, axis =1)]
+q5df.value_counts('#Organism/Name')
+print(q4df[['#Organism/Name','Genes','Proteins', 'Proteins Per Gene']].sort_values('Proteins Per Gene', ascending=False))
